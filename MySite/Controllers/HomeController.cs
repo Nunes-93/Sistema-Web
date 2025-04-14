@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MySite.Models;
+using MySite.Models.ViewModels;
 
 namespace MySite.Controllers
 {
@@ -25,6 +26,8 @@ namespace MySite.Controllers
             ViewData["Nome"] = "Matheus Nunes Menezes";
             return View();
         }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
