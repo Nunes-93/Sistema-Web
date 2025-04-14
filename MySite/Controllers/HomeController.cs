@@ -15,11 +15,14 @@ namespace MySite.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Contato"] = "(75) 98232-5189";
             return View();
         }
 
         public IActionResult Privacy()
         {
+            ViewData["Email"] = "nunes@email.com";
+            ViewData["Nome"] = "Matheus Nunes Menezes";
             return View();
         }
 
