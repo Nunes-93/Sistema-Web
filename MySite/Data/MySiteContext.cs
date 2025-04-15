@@ -14,6 +14,8 @@ namespace MySite.Data
         {
         }
 
-        public DbSet<MySite.Models.Departamento> Departamento { get; set; } = default!;
+        public DbSet<Departamento> Departamento { get; set; } = default!;
+        public DbSet<Vendedor> Vendedor { get; set; }
+        public DbSet<Venda> Venda { get; set; }
     }
 }
