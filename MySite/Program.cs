@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MySite.Data;
+using MySite.Servicos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<MySiteContext>(options =>
 
 // Registrar o SeedingService
 builder.Services.AddScoped<SeedingService>();
+builder.Services.AddScoped<VendedorServico>();
 
 // Adicionar serviços ao contêiner
 builder.Services.AddControllersWithViews();
