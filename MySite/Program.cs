@@ -1,25 +1,41 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using MySite.Data;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configurar o DbContext
 builder.Services.AddDbContext<MySiteContext>(options =>
-options.UseMySql(builder.Configuration.GetConnectionString("MySiteContext"), new MySqlServerVersion(new Version(8, 0, 23)),
-    builder => builder.MigrationsAssembly("MySite")));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("MySiteContext"),
+        new MySqlServerVersion(new Version(8, 0, 23)),
+        builder => builder.MigrationsAssembly("MySite")
+    )
+);
 
-// Add services to the container.
+// Registrar o SeedingService
+builder.Services.AddScoped<SeedingService>();
+
+// Adicionar serviços ao contêiner
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+using (var scope = app.Services.CreateScope())
+{
+    var seedingService = scope.ServiceProvider.GetRequiredService<SeedingService>();
+    seedingService.Seed();
+}
+
+// Configurar o pipeline de requisições HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // O valor padrão do HSTS é 30 dias.
     app.UseHsts();
+}
+else
+{
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
@@ -31,6 +47,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
 app.Run();

@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-
-namespace MySite.Models
+﻿namespace MySite.Models
 {
     public class Departamento
     {
         public int Id { get; set; }
         public string Nome { get; set; }
         public ICollection<Vendedor> Vendedores { get; set; } = new List<Vendedor>();
+
 
         public Departamento()
         {
